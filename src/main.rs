@@ -226,12 +226,6 @@ fn spawn_commands(
     });
 }
 
-#[cfg(target_os = "openbsd")]
-fn sandbox() {
-    use pledge::pledge_promises;
-    pledge_promises![Stdio Inet Rpath Getpw Unveil Exec Dns Proc].unwrap();
-}
-
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
@@ -269,8 +263,6 @@ fn main() {
             std::process::exit(1);
         }
     }
-
-    sandbox();
 
     log.info(&format!(
         "{} v{} started  policy={}  interval={}s  jitter_max={:.2}h  connect_timeout={}s",
