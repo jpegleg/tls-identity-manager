@@ -227,37 +227,10 @@ fn spawn_commands(
 }
 
 #[cfg(target_os = "openbsd")]
-fn sandbox(policy_path: &str, endpoints: &[EndpointConfig]) {
+fn sandbox() {
     use pledge::pledge_promises;
-    use unveil::unveil;
-
-    unveil(policy_path, "r").expect("unveil policy file");
-    unveil("/etc/ssl", "r").expect("unveil /etc/ssl");
-    unveil("/etc/resolv.conf", "r").expect("unveil /etc/resolv.conf");
-    unveil("/etc/hosts", "r").expect("unveil /etc/hosts");
-    unveil("/usr/sbin", "rx").expect("unveil /usr/sbin");
-    unveil("/usr/bin", "rx").expect("unveil /usr/bin");
-    unveil("/bin", "rx").expect("unveil /bin");
-
-    for ep in endpoints {
-        for threshold in &ep.thresholds {
-            for cmd in &threshold.commands {
-                let exe = cmd.split_whitespace().next().unwrap_or("");
-                if !exe.is_empty() && exe.starts_with('/') {
-                    let dir = std::path::Path::new(exe)
-                        .parent()
-                        .and_then(|p| p.to_str())
-                        .unwrap_or("/usr/local/sbin");
-                    unveil(dir, "rx").expect("unveil command directory");
-                }
-            }
-        }
-    }
-    pledge_promises![Stdio Inet Rpath Getpw Unveil Exec Dns].unwrap();
+    pledge_promises![Stdio Inet Rpath Getpw Unveil Exec Dns Proc].unwrap();
 }
-
-#[cfg(not(target_os = "openbsd"))]
-fn sandbox(_policy_path: &str, _endpoints: &[EndpointConfig]) {}
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -297,7 +270,7 @@ fn main() {
         }
     }
 
-    sandbox(policy_path, &policy.endpoints);
+    sandbox();
 
     log.info(&format!(
         "{} v{} started  policy={}  interval={}s  jitter_max={:.2}h  connect_timeout={}s",
