@@ -256,7 +256,7 @@ fn sandbox(policy_path: &str, endpoints: &[EndpointConfig]) {
 
     unveil("", "").expect("unveil lockdown");
 
-    pledge_promises("stdio rpath inet dns proc exec").expect("pledge");
+    pledge_promises!("stdio rpath inet dns proc exec").expect("pledge");
 }
 
 #[cfg(not(target_os = "openbsd"))]
