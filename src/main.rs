@@ -235,7 +235,7 @@ fn sandbox() {
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
-        eprintln!("Usage: tls-renewal-manager <policy.yaml> [-d|-w|-q]");
+        eprintln!("Usage: tls-identity-manager <policy.yaml> [-d|-w|-q]");
         std::process::exit(1);
     }
 
