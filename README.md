@@ -55,6 +55,12 @@ Each theshold can have up to 255 commands. Each command is executed with `sh -c`
 There is a required dependency of system openssl pacakges. The choice is to use the same system openssl/libressl/etc. If your install fails, this is the likely item
 that is missing. Install the openssl sys libraries for your distro and then try to install again.
 
+Example for debian:
+
+```
+sudo apt install librust-openssl-sys-dev
+```
+
 TLS identity manager can be compiled from source code such as with cargo, either with cargo install or clone the source code and building.
 
 The binary can be downloaded from release binaries on GitHub.
