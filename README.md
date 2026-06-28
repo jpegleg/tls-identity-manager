@@ -52,6 +52,9 @@ Each theshold can have up to 255 commands. Each command is executed with `sh -c`
 
 ### installing
 
+There is a required dependency of system openssl pacakges. The choice is to use the same system openssl/libressl/etc. If your install fails, this is the likely item
+that is missing. Install the openssl sys libraries for your distro and then try to install again.
+
 TLS identity manager can be compiled from source code such as with cargo, either with cargo install or clone the source code and building.
 
 The binary can be downloaded from release binaries on GitHub.
@@ -60,4 +63,13 @@ The binary can be downloaded from release binaries on GitHub.
 cargo install tls-identity-manager
 ```
 
-Write your own policy.yaml and sp
+Write your own policy.yaml and scripts to execute the actions desired.
+
+### openbsd version
+
+See the [OpenBSD fork](https://github.com/jpegleg/paludification_toad/tree/main/timbsd) for work on Pledge and Unveil adoption.
+
+### related software
+
+See [linux disk space manger](https://github.com/jpegleg/linux-disk-space-manager) for a similar controller but for disk space.
+
