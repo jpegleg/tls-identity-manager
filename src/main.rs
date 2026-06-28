@@ -253,10 +253,7 @@ fn sandbox(policy_path: &str, endpoints: &[EndpointConfig]) {
             }
         }
     }
-
-    unveil("", "").expect("unveil lockdown");
-
-    pledge_promises!("stdio rpath inet dns proc exec").expect("pledge");
+    pledge_promises![Stdio Inet Rpath Getpw Unveil Exec Dns].unwrap();
 }
 
 #[cfg(not(target_os = "openbsd"))]
