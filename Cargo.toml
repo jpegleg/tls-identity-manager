@@ -15,7 +15,7 @@ keywords = ["pki", "certificate-renewal", "pki-automation", "tls", "cert-automat
 serde = { version = "1", features = ["derive"] }
 yaml_serde = "0.10.4"
 chrono = "0.4"
-gethostname = "0.4"
+gethostname = "1"
 openssl = "0.10"
 
 [target.'cfg(target_os = "openbsd")'.dependencies]
