@@ -20,7 +20,6 @@ openssl = "0.10"
 
 [target.'cfg(target_os = "openbsd")'.dependencies]
 pledge = "0.4"
-unveil = "0.3"
 
 [profile.release]
 opt-level = 3
