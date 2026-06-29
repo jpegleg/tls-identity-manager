@@ -18,15 +18,22 @@ endpoints:
     thresholds:
       - days_before_expiry: 13
         commands:
-          - "/root/certbot_kb.sh"
+          - "/root/certbot_cd.sh"
 
       - days_before_expiry: 10
         commands:
-          - "bash /root/kb_wrap"
+          - "bash /root/cd_wrap"
 
 ```
 
 The program can be run in the foreground, or installed as a system daemon.
+
+The expected use is a system daemon that is installed via systemd or (rc init script, etc).
+The tls-identity-manager service can then use long periods of jitter which is helpful for avoiding
+burst traffic patterns and scrambles trackers that try to detect cert renewal date proximity for malicious purposes.
+
+When run as root, the commands are run as root. It is root command injection as a service, so use with caution and protect the config file.
+TLS identity manager can also be run as a lower privileges, that can work fine too.
 
 Here is an example of running the program in debug mode in a terminal session:
 
